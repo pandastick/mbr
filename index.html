@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title class="layout-name">MBR Attendance Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <style>
+    body {
+        margin-top: 50px;
+    }
+    .container {
+        max-width: 1000px;
+    }
+    @font-face {
+        font-family: 'BLOKKNeue-Regular';
+        src: url('BLOKKNeue-Regular.eot');
+        src: url('BLOKKNeue-Regular.eot?#iefix') format('embedded-opentype'),
+             url('BLOKKNeue-Regular.woff') format('woff'),
+             url('BLOKKNeue-Regular.svg#BLOKKNeue-Regular') format('svg');
+        font-weight: normal;
+        font-style: normal;
+    }
+    .placeholder {
+        font-family: "BLOKKNeue-Regular", serif;
+        color: #bbb;
+    }
+    .placeholder-left, .placeholder-right {
+        float: left;
+        background-color: #eee;
+        border: 0;
+        margin: 10px 10px 10px 0;
+    }
+    .placeholder-right {
+        float: right;
+        margin: 10px 0 10px 10px;
+    }
+    .navbar-brand {
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    let cpeId
+    let cpeUrl
+    let effect
+    let env
+    const url = window.location.search.substring(1)
+    const config = {
+      dev: {
+        url: '../dist/client.js',
+        effect: { autonext: '111111111111111111111111', stp: '222222222222222222222222', pip: '333333333333333333333333', multi: '000000000000000000000000'/*multi: '594bc52dc0edd7001dfb19a5'*/ }
+      },
+      qualif: {
+        url: '//dev036-googlecast.vme-tech.com/cpe-client/dist/client.js',
+        effect: { autonext: '594bc2b0c0edd70012e7347a', stp: '594bc38ac0edd7000ea3c10f', pip: '594bc4d0c0edd7001ce443f1', multi: '594bc52dc0edd7001dfb19a5' }
+      },
+      pprod: {
+        url: '//api-stage.dmcdn.net/pxl/cpe/client.js',
+        effect: { autonext: '594bc2b0c0edd70012e7347a', stp: '594bc38ac0edd7000ea3c10f', pip: '594bc4d0c0edd7001ce443f1', multi: '13e13131a3f13131de1313da' }
+      },
+      prod: {
+        url: '//api.dmcdn.net/pxl/cpe/client.js',
+        effect: { autonext: '595b5e9248e426001563eb4f', stp: '595b5ec648e426001563eb50', pip: '595b5edbf977590017b744b7', multi: '595b5eeca23b3c000e0717e2' }
+      },
+      apiProd: {
+        url: '../dist/client.js',
+        effect: { autonext: '595b5e9248e426001563eb4f', stp: '595b5ec648e426001563eb50', pip: '595b5edbf977590017b744b7', multi: '5971d3b27c36ef0223fc3968' } //595b5eeca23b3c000e0717e2
+      }
+    }
+    if (url !== '') {
+      env = /env=([^&]+)/.exec(window.location.search.substring(1))
+      effect = /ef=([^&]+)/.exec(window.location.search.substring(1))
+    }
+    env = !env ? 'dev' : env[1]
+    effect = !effect ? 'multi' : effect[1]
+    cpeId = config[env].effect[effect]
+    cpeUrl = config[env].url
+    console.log(`[DEMO] Env > ${env} (${cpeUrl})`)
+    console.log(`[DEMO] Effect: ${effect} (${cpeId})`);
+
+    let gUnitsParams = {
+      /*videos:'x5mmigv',
+      'video-id':'video1,video2',*/
+      channels:'SimonsCat',
+      /*playlist:'playlist',
+      source:'source',
+      languages:'fr,it',
+      keywords:'word1, word2',
+      tags:'tag1, tag2',
+      topics:'topic1, topic2',*/
+      sort:'recent',
+      extend_parameter:false
+    };
+
+    (function(w,d,s,u,n,i,f,g,e,c){
+      w.WDMObject=n;
+      w[n]=w[n]||function(){
+        (w[n].q=w[n].q||[]).push(arguments);
+      };
+      w[n].l=1*new Date();
+      w[n].i=i;
+      w[n].f=f;
+      w[n].g=g;
+      e=d.createElement(s);
+      e.async=1;e.src=u;
+      c=d.getElementsByTagName(s)[0];
+      c.parentNode.insertBefore(e,c);
+    })(window,document,"script",cpeUrl,"cpe",cpeId,{pip_enable:true,stp_enable:true},gUnitsParams);
+    window["cpe"].debug=true
+    window["cpe"].guile={
+      container: 'scrollable' // DOM element id to listen to for scroll and keypress events
+    }
+  </script>
+</head>
+<body>
+<div style="margin-left:20px">
+<h1>MBR Attendance Dashboard</h1>
+<iframe width="600" height="371" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS4z2_DUCBE5eBPPTjYkv2asPfSi-W0wtW8ZuBplmB7wvhzeCKQc6B75FR19EEVLOTXuzJ3bCIc1zhX/pubchart?oid=564226474&amp;format=interactive"></iframe>
+<br>
+<br>
+
+
+
+</body>
+</html>
